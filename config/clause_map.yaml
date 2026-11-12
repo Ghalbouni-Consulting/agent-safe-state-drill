@@ -1,0 +1,639 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Ghalbouni Consulting SASU
+#
+# Machine-readable clause map. Card text is rendered from this file.
+# Do not hard-code clause wording in Python.
+#
+# Tally (12 Nov 2026): 47 rows, 47 verified, 0 unverified.
+# EU-14 and EU-15 were re-read against Regulation (EU) 2026/1744
+# (Digital Omnibus on AI), OJ L, 2026/1744, 24.7.2026, in force 27 July 2026
+# (Article 4): https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng
+
+meta:
+  verified_on: "2026-11-12"
+  tally: 47
+  verified: 47
+  unverified: 0
+  note: >
+    All 47 rows were checked against primary text on 12 Nov 2026: the HKMA
+    Discussion Paper (November 2026), ANSSI Les Essentiels v1.0 (October 2026),
+    Regulation (EU) 2024/1689 (OJ L, 12.7.2024), and Regulation (EU) 2026/1744
+    (OJ L, 2026/1744, 24.7.2026, in force 27 July 2026). Regulation (EU)
+    2026/1744 does not change the wording of AI Act Articles 12, 14, 19 or 26.
+    The Article 113 dates below are the text inserted by Article 1(40)(b) of
+    that regulation. The renderer can still mark a row UNVERIFIED; no current
+    row uses that state.
+
+clauses:
+  - id: HK-01
+    requirement: Stop mechanism brings the agent to a safe state promptly
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "Executive Summary, Human oversight and effective intervention"
+    page: 6
+    quote: 'An effective stop mechanism—often referred to as a "kill switch"—should enable an institution to bring an A.I. agent to a safe state promptly'
+    verified: true
+    verified_on: "2026-11-12"
+    note: "The two-second figure on the card is this project's demo target, not a number in the paper."
+    demo_step: "ksdrill stop, S0–S6"
+    card_field: "Verdict banner; time_to_safe_state_ms"
+
+  - id: HK-02
+    requirement: Halt task execution
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "Executive Summary, Human oversight and effective intervention"
+    page: 6
+    quote: "halting task execution"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: S1
+    card_field: "Steps table row S1"
+
+  - id: HK-03
+    requirement: Revoke access or credentials
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "Executive Summary, Human oversight and effective intervention"
+    page: 6
+    quote: "revoking access or credentials"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "S2; bypass B1–B3"
+    card_field: "Row S2; bypass B1–B3"
+
+  - id: HK-04
+    requirement: Disable connections to external tools or systems
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "Executive Summary, Human oversight and effective intervention"
+    page: 6
+    quote: "disabling connections to external tools or systems"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "S3; bypass B4"
+    card_field: "Row S3; bypass B4"
+
+  - id: HK-05
+    requirement: Pause outbound communications
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "Executive Summary, Human oversight and effective intervention"
+    page: 6
+    quote: "pausing outbound communications"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "S4; bypass B5, B9"
+    card_field: "Row S4; bypass B5, B9"
+
+  - id: HK-06
+    requirement: Activate a fallback process
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "Executive Summary, Human oversight and effective intervention"
+    page: 6
+    quote: "activating a fallback process"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "S5; AT-19"
+    card_field: "Row S5"
+
+  - id: HK-07
+    requirement: Preserve relevant logs and evidence
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "Executive Summary, Human oversight and effective intervention"
+    page: 6
+    quote: "preserving relevant logs and evidence"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "S6; verify-log"
+    card_field: "Row S6; chain head hash"
+
+  - id: HK-08
+    requirement: Before activation, verify configuration including stop mechanisms and fallback
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§6.2 Deployment and activation"
+    page: 31
+    quote: "confirming the configuration of models, prompts, workflows, tools, permissions, integrations, data flows, monitoring, logging, stop mechanisms and fallback arrangements"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "Pre-flight check in ksdrill drill"
+    card_field: "Header: config sha256, pre-flight OK"
+
+  - id: HK-09
+    requirement: Test whether the deployment can be paused safely and whether stop and fallback work
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§6.2 Deployment and activation"
+    page: 32
+    quote: "can be paused, suspended or withdrawn safely, and whether its stop mechanism and fallback arrangements work when invoked"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "Whole drill"
+    card_field: "Verdict banner"
+
+  - id: HK-10
+    requirement: Test under adversarial conditions including attempted circumvention
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§6.2 Deployment and activation"
+    page: 32
+    quote: "control failures and attempted circumvention of authority boundaries"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "Bypass suite B1–B9"
+    card_field: "Bypass table"
+
+  - id: HK-11
+    requirement: Intervention takes effect at a speed commensurate with operating velocity
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§6.2 Operations, material change and retirement"
+    page: 33
+    quote: "technical arrangements that can take effect at a speed commensurate with the deployment's authority and operating velocity"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "AT-21 (stop under 20 calls/s)"
+    card_field: "Per-step ms; calls accepted after latch = 0"
+
+  - id: HK-12
+    requirement: Agent cannot create or alter credentials or modify its own boundary controls
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§7.1"
+    page: 36
+    quote: "should not be able to create or alter credentials, connect to new external interfaces, or modify its own boundary controls at runtime"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "The paper's sentence is qualified by an explicit, controlled exception. This drill does not enable that exception."
+    demo_step: "B3 (new-token request), B6 (relaunch), AT-19 policy hash"
+    card_field: "Bypass B3, B6"
+
+  - id: HK-13
+    requirement: Design accounts for detection, decision and stopping time
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§7.2"
+    page: 37
+    quote: "Their design should take account of detection time, decision time and stopping time"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "Timer splits; supervisor auto-trigger adds detection time"
+    card_field: "Timings block (t_detect if auto, t_latch, t_safe)"
+
+  - id: HK-14
+    requirement: Stop mechanism ("kill switch") as an intervention measure
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§7.2"
+    page: 37
+    quote: 'pausing or suspending the deployment through a stop mechanism, also referred to as a "kill switch"'
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "ksdrill stop"
+    card_field: "Verdict banner"
+
+  - id: HK-15
+    requirement: Stop operable regardless of vendor or platform status
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§7.2"
+    page: 38
+    quote: "The mechanism should be operable regardless of the status of a vendor, platform or other third-party component"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "AT-17: stop with LLM backend down"
+    card_field: "Line: LLM backend down during stop"
+
+  - id: HK-16
+    requirement: Test timeframe, in-flight actions and fallback continuity; record suspension
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§7.2"
+    page: 38
+    quote: "whether it takes effect within a sufficient timeframe, whether residual or in-flight actions are appropriately managed, and whether the fallback can maintain continuity"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "Budgets; B9 in-flight email held; AT-19"
+    card_field: "Steps table; B9; S5"
+
+  - id: HK-17
+    requirement: Practical test that the institution can deliberately stop and keep continuity
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§7.2"
+    page: 38
+    quote: "demonstrate that it can deliberately stop or constrain the deployment and maintain business continuity"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "S1 + S5 together"
+    card_field: "Verdict banner"
+
+  - id: HK-18
+    requirement: Deployment record names stop mechanism, fallback and log locations; suspensions recorded
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§7.3"
+    page: "38-39"
+    quote: "its stop mechanism, fallback arrangements and log locations"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "The same section says suspensions and restorations should be recorded."
+    demo_step: "deployment_record.yaml; stop and restore records"
+    card_field: "Header block: Deployment record"
+
+  - id: HK-19
+    requirement: Distinct identities and credentials per deployment
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§7.3"
+    page: 39
+    quote: "Each deployment should use distinct identities and credentials where appropriate"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "Per-tool tokens; AT-01"
+    card_field: "Line: tokens scoped, TTL"
+
+  - id: HK-20
+    requirement: Action logs show what, when, instruction, tools, permissions and intervention
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§7.3"
+    page: 39
+    quote: "what the deployment did, what was affected, when the action occurred, the instruction or event that prompted it"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "The same sentence continues through tools, permissions and any human approval or intervention."
+    demo_step: "Log schema"
+    card_field: "Log excerpt"
+
+  - id: HK-21
+    requirement: Evidence through tamper-evident logs
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "Discussion question 7A, The HKMA's views"
+    page: 40
+    quote: "approval records and tamper-evident logs"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "On one laptop the chain detects tampering. It does not prevent a same-user edit."
+    demo_step: "Hash chain; B8"
+    card_field: "Chain head hash; B8"
+
+  - id: HK-22
+    requirement: Tested stop and fallback within the timeframe required to contain harm
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "Discussion question 7B, The HKMA's views"
+    page: 40
+    quote: "maintain tested intervention, stop and fallback arrangements capable of operating within the timeframe required to prevent or contain material harm"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "The paper sets no numeric timeframe. The card's budget is ours."
+    demo_step: "Whole drill and budgets"
+    card_field: "Verdict and timings"
+
+  - id: HK-23
+    requirement: Status of the paper is non-binding
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§2.3 Status of this Paper"
+    page: 11
+    quote: "It creates no new obligations"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "The paragraph also says the paper presents preliminary views, does not consult on new rules, and is not a statement of supervisory expectations."
+    demo_step: "n/a"
+    card_field: "Footer disclaimer"
+
+  - id: HK-24
+    requirement: Comment deadline
+    source: "HKMA, Discussion Paper on Agentic A.I. Governance in the Banking Sector (November 2026)"
+    url: "https://www.hkma.gov.hk/media/eng/doc/key-information/press-release/2026/20261102e3a1.pdf"
+    ref: "§10.2"
+    page: 57
+    quote: "submit comments by 1 February 2027"
+    verified: true
+    verified_on: "2026-11-12"
+    note: null
+    demo_step: "n/a"
+    card_field: "Footer: source version note"
+
+  - id: AN-01
+    requirement: Emergency stop with access revocation, triggerable by supervision
+    source: "ANSSI, Les Essentiels – Sécuriser un système IA agentique, v1.0 (October 2026)"
+    url: "https://messervices.cyber.gouv.fr/documents-guides/anssi_essentiels_ia_agentique_1.0.pdf"
+    ref: "Principle 6, Limiter l'impact d'un système agentique"
+    page: 2
+    quote: "Prévoir un arrêt d'urgence avec révocation des accès, déclenchable par un mécanisme de supervision en cas de traitements anormaux."
+    verified: true
+    verified_on: "2026-11-12"
+    note: "English gloss, not official text: provide an emergency stop with access revocation, triggerable by a supervision mechanism on abnormal processing. Landing page: https://messervices.cyber.gouv.fr/guides/essentiels-ia-agentique (published 30 October 2026)."
+    demo_step: "S0–S2; supervisor auto-trigger"
+    card_field: "Rows S1, S2; trigger line"
+
+  - id: AN-02
+    requirement: Predefined degraded mode without weakening controls or extending rights
+    source: "ANSSI, Les Essentiels – Sécuriser un système IA agentique, v1.0 (October 2026)"
+    url: "https://messervices.cyber.gouv.fr/documents-guides/anssi_essentiels_ia_agentique_1.0.pdf"
+    ref: "Principle 6"
+    page: 2
+    quote: "Prédéfinir un mode dégradé, sans affaiblir les contrôles ni élargir les droits."
+    verified: true
+    verified_on: "2026-11-12"
+    note: "English gloss: predefine a degraded mode, without weakening controls or extending rights."
+    demo_step: "S5; AT-19"
+    card_field: "Row S5"
+
+  - id: AN-03
+    requirement: Test restoration; an executed external action is not replayed
+    source: "ANSSI, Les Essentiels – Sécuriser un système IA agentique, v1.0 (October 2026)"
+    url: "https://messervices.cyber.gouv.fr/documents-guides/anssi_essentiels_ia_agentique_1.0.pdf"
+    ref: "Principle 6"
+    page: 2
+    quote: "Tester les mécanismes de restauration pour retrouver un état maîtrisé. Vérifier qu'après une restauration, une action déjà exécutée avec un effet externe n'est pas rejouée."
+    verified: true
+    verified_on: "2026-11-12"
+    note: "English gloss: test restoration to a controlled state, and check that an action already executed with an external effect is not replayed."
+    demo_step: "ksdrill restore; AT-22"
+    card_field: "Line: restore, no replay — or not run"
+
+  - id: AN-04
+    requirement: Secrets out of model context, memory and logs; short-lived least-privilege tokens
+    source: "ANSSI, Les Essentiels – Sécuriser un système IA agentique, v1.0 (October 2026)"
+    url: "https://messervices.cyber.gouv.fr/documents-guides/anssi_essentiels_ia_agentique_1.0.pdf"
+    ref: "Principle 6"
+    page: 2
+    quote: "Maintenir les secrets hors du contexte du modèle, des mémoires et des journaux … jetons d'accès à durée de validité courte, limités aux droits strictement nécessaires."
+    verified: true
+    verified_on: "2026-11-12"
+    note: "English gloss: keep secrets out of the model context, memories and logs; issue short-lived access tokens limited to the rights strictly required. The ellipsis marks text omitted between the two clauses of Principle 6."
+    demo_step: "Token broker; AT-02; AT-05"
+    card_field: "Line: secrets in logs/transcript"
+
+  - id: AN-05
+    requirement: Deterministic filter upstream of each tool, default deny, not bypassable by the agent
+    source: "ANSSI, Les Essentiels – Sécuriser un système IA agentique, v1.0 (October 2026)"
+    url: "https://messervices.cyber.gouv.fr/documents-guides/anssi_essentiels_ia_agentique_1.0.pdf"
+    ref: "Principle 5, Fonder l'autorisation sur un contrôle déterministe"
+    page: 2
+    quote: "un mécanisme de filtrage déterministe et indépendant de l'agent, en amont de chaque outil … Par défaut, refuser l'action."
+    verified: true
+    verified_on: "2026-11-12"
+    note: "English gloss: a deterministic filter independent of the agent, upstream of each tool; by default, refuse the action."
+    demo_step: "Tool gateway; AT-03; B4"
+    card_field: "Bypass B4"
+
+  - id: AN-06
+    requirement: External communications only through controlled interfaces
+    source: "ANSSI, Les Essentiels – Sécuriser un système IA agentique, v1.0 (October 2026)"
+    url: "https://messervices.cyber.gouv.fr/documents-guides/anssi_essentiels_ia_agentique_1.0.pdf"
+    ref: "Principle 4, Séparer et cloisonner les environnements"
+    page: 2
+    quote: "Faire transiter les communications externes exclusivement par des interfaces maîtrisées."
+    verified: true
+    verified_on: "2026-11-12"
+    note: "English gloss: send external communications only through controlled interfaces."
+    demo_step: "Outbound queue is the only path to the sink; B5"
+    card_field: "Row S4; B5"
+
+  - id: AN-07
+    requirement: Logs out of the agent's reach; rebuild request, authorisation, action, result
+    source: "ANSSI, Les Essentiels – Sécuriser un système IA agentique, v1.0 (October 2026)"
+    url: "https://messervices.cyber.gouv.fr/documents-guides/anssi_essentiels_ia_agentique_1.0.pdf"
+    ref: "Principle 7, Démontrer et maintenir la maîtrise du système"
+    page: 2
+    quote: "Maintenir les journaux du système agentique hors de portée des modifications de l'agent … demande → autorisation → action → résultat."
+    verified: true
+    verified_on: "2026-11-12"
+    note: "English gloss: keep the agentic system's logs out of the agent's reach, and be able to rebuild request, authorisation, action and result."
+    demo_step: "Harness-only log writer; ksdrill verify-log --chain"
+    card_field: "Log excerpt shows the four-link chain"
+
+  - id: AN-08
+    requirement: Keep the approval mechanism out of the agent's reach
+    source: "ANSSI, Les Essentiels – Sécuriser un système IA agentique, v1.0 (October 2026)"
+    url: "https://messervices.cyber.gouv.fr/documents-guides/anssi_essentiels_ia_agentique_1.0.pdf"
+    ref: "Principle 3, Classer et contrôler les actions des agents"
+    page: 1
+    quote: "Garder le mécanisme d'approbation hors de portée du système agentique."
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Verified text. Applied here by analogy: ANSSI says this of the approval mechanism, and this drill applies the same placement rule to the stop control. The admin key is held only by the operator and the drill."
+    demo_step: "Admin key held by operator/drill; B3, B6"
+    card_field: "Line: admin key not in agent env"
+
+  - id: EU-01
+    requirement: Effective oversight by natural persons while the system is in use
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 14(1)"
+    page: 60
+    quote: "they can be effectively overseen by natural persons during the period in which they are in use"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "High-risk obligation. A payments-and-email assistant is not, by itself, a high-risk system. Wording unchanged by Regulation (EU) 2026/1744."
+    demo_step: "Operator stop and ksdrill status"
+    card_field: "Header: operator"
+
+  - id: EU-02
+    requirement: Oversight person can monitor and detect anomalies
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 14(4)(a)"
+    page: 60
+    quote: "duly monitor its operation, including in view of detecting and addressing anomalies, dysfunctions and unexpected performance"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Wording unchanged by Regulation (EU) 2026/1744."
+    demo_step: "ksdrill status; supervisor auto-trigger"
+    card_field: "Trigger line"
+
+  - id: EU-03
+    requirement: Stop button or similar procedure that halts the system in a safe state
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 14(4)(e)"
+    page: 61
+    quote: "interrupt the system through a 'stop' button or a similar procedure that allows the system to come to a halt in a safe state"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Wording unchanged by Regulation (EU) 2026/1744."
+    demo_step: "ksdrill stop"
+    card_field: "Verdict banner"
+
+  - id: EU-04
+    requirement: Robustness may include backup or fail-safe plans
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 15(4), second subparagraph"
+    page: 61
+    quote: "technical redundancy solutions, which may include backup or fail-safe plans"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Article 15 is in the set Article 2(13), inserted by Regulation (EU) 2026/1744 Article 1(3), may in future limit for Annex I systems by delegated act. The article's wording is not rewritten, and that insertion does not cover Article 26."
+    demo_step: "S5 fallback"
+    card_field: "Row S5"
+
+  - id: EU-05
+    requirement: Automatic recording of events (logs) over the lifetime of the system
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 12(1)"
+    page: 59
+    quote: "shall technically allow for the automatic recording of events (logs) over the lifetime of the system"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Wording unchanged by Regulation (EU) 2026/1744."
+    demo_step: "Audit log"
+    card_field: "Log excerpt; record count"
+
+  - id: EU-06
+    requirement: Logs support risk identification, post-market monitoring and operation monitoring
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 12(2)(a)–(c)"
+    page: 59
+    quote: "(a) identifying situations that may result in the high-risk AI system presenting a risk … (b) facilitating the post-market monitoring referred to in Article 72; and (c) monitoring the operation … referred to in Article 26(5)"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Wording unchanged by Regulation (EU) 2026/1744. Ellipsis marks text omitted inside the quoted points."
+    demo_step: "Stop event and reason logged"
+    card_field: "Stop reason line"
+
+  - id: EU-07
+    requirement: Providers keep logs at least six months; financial institutions keep them in their FS documentation
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 19(1)–(2)"
+    page: 64
+    quote: "of at least six months"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Article 19(2) says financial-institution providers maintain the logs as part of the documentation kept under the relevant financial services law. Wording unchanged by Regulation (EU) 2026/1744. This demo does not prove six-month retention; it records the configured policy."
+    demo_step: "S6 seals and exports; retention_days"
+    card_field: "Footer: retention policy"
+
+  - id: EU-08
+    requirement: Deployers assign oversight to competent, authorised natural persons
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 26(2)"
+    page: 68
+    quote: "assign human oversight to natural persons who have the necessary competence, training and authority"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Wording unchanged by Regulation (EU) 2026/1744. Article 2(13), inserted by that regulation, does not cover Article 26."
+    demo_step: "deployment_record.yaml names the stop owner"
+    card_field: "Header: stop owner"
+
+  - id: EU-09
+    requirement: Deployers monitor and, where the system presents a risk, suspend its use
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 26(5), first subparagraph"
+    page: 68
+    quote: "shall suspend the use of that system"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Wording unchanged by Regulation (EU) 2026/1744."
+    demo_step: "Stop is the suspension; the latch persists across restarts (B6, B7)"
+    card_field: "Bypass B6, B7"
+
+  - id: EU-10
+    requirement: For financial-institution deployers, the monitoring obligation can be met through FS governance rules
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 26(5), second subparagraph"
+    page: 68
+    quote: "shall be deemed to be fulfilled by complying with the rules on internal governance arrangements"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Context for a bank buyer. The sentence continues with processes and mechanisms under the relevant financial service law. Wording unchanged by Regulation (EU) 2026/1744."
+    demo_step: "n/a"
+    card_field: "Legend note"
+
+  - id: EU-11
+    requirement: Deployers keep automatically generated logs at least six months
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 26(6)"
+    page: 68
+    quote: "keep the logs automatically generated by that high-risk AI system"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "The paragraph requires a period appropriate to the intended purpose, of at least six months, unless applicable law provides otherwise. Wording, including the six-month period, is unchanged by Regulation (EU) 2026/1744."
+    demo_step: S6
+    card_field: "Footer retention line"
+
+  - id: EU-12
+    requirement: Providers run post-market monitoring
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 72(1)–(2)"
+    page: 101
+    quote: "actively and systematically collect, document and analyse relevant data"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Indirect only: this is a provider obligation. A drill export can feed it. It is not a claim that this demo is a post-market monitoring system."
+    demo_step: "Drill JSON export"
+    card_field: "Not printed as a result line (legend only)"
+
+  - id: EU-13
+    requirement: High-risk scope for creditworthiness and for life and health insurance pricing
+    source: "Regulation (EU) 2024/1689 (AI Act), OJ L, 12.7.2024"
+    url: "http://data.europa.eu/eli/reg/2024/1689/oj"
+    ref: "Article 6(2) and Annex III, point 5(b) and point 5(c)"
+    page: 127
+    quote: "evaluate the creditworthiness of natural persons or establish their credit score"
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Annex III point 5(c) covers risk assessment and pricing for natural persons in life and health insurance. Annex III points 5(b) and 5(c), and Article 6(2), are not amended by Regulation (EU) 2026/1744. Article 1(8) of that regulation only inserts Article 6(1a) to Article 6(1c). A payments-and-email assistant is normally outside these points, so the AI Act rows are good-practice anchors for this demo, not obligations."
+    demo_step: "n/a"
+    card_field: "Legend note"
+
+  - id: EU-14
+    requirement: Application dates for Chapter III high-risk rules after the 2026 amendment
+    source: "Regulation (EU) 2026/1744 (Digital Omnibus on AI), OJ L, 2026/1744, 24.7.2026"
+    url: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng"
+    ref: "Article 1(40)(b), replacing Article 113, third paragraph, point (c) of Regulation (EU) 2024/1689"
+    page: null
+    quote: "(c) Chapter III, Sections 1, 2, and 3, with the exception of Article 6(5), shall apply from: (i) 2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III; and (ii) 2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I;"
+    quote_kind: verbatim
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Primary text of Regulation (EU) 2026/1744, read 12 Nov 2026. In force 27 July 2026 (Article 4). This replaces the original Article 113 third-paragraph point (c), which had set Article 6(1) and the corresponding obligations from 2 August 2027 (OJ L, 12.7.2024, p. 123)."
+    demo_step: "n/a"
+    card_field: "Legend note"
+
+  - id: EU-15
+    requirement: Whether Regulation (EU) 2026/1744 amended Articles 12, 14, 19 or 26
+    source: "Regulation (EU) 2026/1744 (Digital Omnibus on AI), OJ L, 2026/1744, 24.7.2026"
+    url: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng"
+    ref: "Article 1, read against Articles 12, 14, 19 and 26 of Regulation (EU) 2024/1689"
+    page: null
+    quote: "Regulation (EU) 2026/1744 does not amend the wording of Articles 12, 14, 19 or 26 of Regulation (EU) 2024/1689, including the six-month log-retention period in Article 26(6)."
+    quote_kind: finding
+    verified: true
+    verified_on: "2026-11-12"
+    note: "Finding from the primary text, read 12 Nov 2026, not a sentence copied out of an article. Article 1(3) adds Article 2(13), which allows a future limitation of Articles 9 to 15 and 17 to 25 for Article 6(1) (Annex I) systems by delegated act under stated conditions. That insertion does not rewrite those articles and does not cover Article 26. Quotes of Articles 12, 14, 19 and 26 on this card are the OJ L 12.7.2024 text."
+    demo_step: "n/a"
+    card_field: "Legend: quotes from OJ L 12.7.2024, wording unchanged by Regulation (EU) 2026/1744"

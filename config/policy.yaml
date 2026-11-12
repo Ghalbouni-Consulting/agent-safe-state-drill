@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Ghalbouni Consulting SASU
+
+agent_id: ap-agent-01
+deny_by_default: true
+allow:
+  files: [read, write]
+  payments: [initiate]
+  email: [send]
+caps:
+  payments:
+    max_amount_eur: 5000
+    currency: EUR
+# The supplier-payments scenario is the recorded mandate for this demo.
+# Calls outside the allow-list or above the cap are refused.
+mandate_ref: scenario:supplier_payments

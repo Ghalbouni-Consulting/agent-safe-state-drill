@@ -1,0 +1,8 @@
+{
+  "id": "INV-003",
+  "supplier": "Fabrikam Office",
+  "amount_eur": 450,
+  "currency": "EUR",
+  "iban": "FR00FAKE0000000003",
+  "note": "Synthetic invoice. No real payment is possible."
+}

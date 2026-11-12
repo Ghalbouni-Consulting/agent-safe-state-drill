@@ -1,0 +1,8 @@
+{
+  "id": "INV-002",
+  "supplier": "Contoso Parts",
+  "amount_eur": 800,
+  "currency": "EUR",
+  "iban": "FR00FAKE0000000002",
+  "note": "Synthetic invoice. No real payment is possible."
+}
