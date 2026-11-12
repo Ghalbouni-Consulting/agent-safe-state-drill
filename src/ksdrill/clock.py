@@ -8,6 +8,7 @@ import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+# Windows does not ship the IANA database. The tzdata dependency supplies it.
 PARIS = ZoneInfo("Europe/Paris")
 
 
