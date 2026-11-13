@@ -132,7 +132,12 @@ def run_drill(options: DrillOptions) -> DrillOutcome:
 
 
 def _overrides(options: DrillOptions) -> dict[str, Any]:
-    data: dict[str, Any] = {"probe_token_layer": options.probe_token_layer}
+    # The committed default delay is the live-demo window (60 s). The drill
+    # freezes the in-flight email and does not wait on that clock.
+    data: dict[str, Any] = {
+        "probe_token_layer": options.probe_token_layer,
+        "email_dispatch_delay_ms": 0,
+    }
     if options.ports:
         data["ports"] = {"agent": options.ports[0], "admin": options.ports[1]}
     if options.stop_at_step is not None:

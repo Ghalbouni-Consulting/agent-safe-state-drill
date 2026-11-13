@@ -43,9 +43,22 @@ ksdrill harness up
 ksdrill agent start --pause-at-step 3    # terminal A; blocks on purpose
 ksdrill status --watch                   # terminal B
 ksdrill stop --operator joe --reason "demo: threshold breach"
+ksdrill bypass
+ksdrill card <run-id>
 ```
 
 `--pause-at-step 3` holds the agent after the first payment, with the confirmation email queued and not yet released. Without it the mock scenario finishes in a few seconds, which is what the automated drill wants and what a live narration does not.
+
+`ksdrill harness up` turns the token-layer probe on, so `ksdrill bypass` can show B1 and B2 as `401` after the latch. The latch is still checked first on every normal call; the probe runs only with the header `X-Probe-Token-Layer: 1`. Turn it off with `ksdrill harness up --no-probe-token-layer`.
+
+A queued email stays in flight for **60 seconds** (`email_dispatch_delay_ms` in `config/drill.yaml`) before the dispatcher sends it. That is long enough to narrate the stop and still have B9 hold the message. Stretch or shorten the window for this run with either of:
+
+```bash
+ksdrill agent start --pause-at-step 3 --email-delay-ms 120000
+KSD_EMAIL_DELAY_MS=120000 ksdrill agent start --pause-at-step 3
+```
+
+`ksdrill drill` does not use that 60 second clock. It freezes the email channel and sets the delay to 0, so CI stays fast and the in-flight message is still held until stop.
 
 ## What the stop does
 
@@ -81,7 +94,7 @@ Tokens are HMAC-SHA256 JWTs, one audience per tool, a short TTL (default 300 sec
 | B8 | Flip one byte of a sealed log line, on a copy | `verify-log` reports `BROKEN at seq N`. The evidence file is untouched |
 | B9 | The email that was queued when stop fired | status `HELD`, never written to the sink |
 
-B1 and B2 use a test hook, `probe_token_layer`, which the drill turns on. It does nothing unless the caller also sends `X-Probe-Token-Layer: 1`. A normal `ksdrill harness up` leaves it off. The latch check stays first on the real stop path.
+B1 and B2 use a test hook, `probe_token_layer`. It does nothing unless the caller also sends `X-Probe-Token-Layer: 1`, so the latch check stays first on the real stop path. `ksdrill drill` and `ksdrill harness up` both turn the flag on. `ksdrill harness up --no-probe-token-layer` turns it off; B2 then stops at `409 HALTED` and does not reach `401 TOKEN_INVALID`.
 
 On a laptop the hash chain **detects** tampering. It does not prevent a same-user edit. The card says so.
 

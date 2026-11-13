@@ -58,6 +58,10 @@ class FreezeIn(BaseModel):
     channels: list[str]
 
 
+class EmailDelayIn(BaseModel):
+    delay_ms: int
+
+
 class BypassLogIn(BaseModel):
     id: str
     name: str
@@ -248,6 +252,18 @@ def create_admin_app(ctx: HarnessContext) -> FastAPI:
         require_admin(x_admin_key)
         ctx.outbound.freeze(["email"])
         return {"detail": "HELD", "channels": ["email"]}
+
+    @app.post("/admin/outbound/email-delay")
+    def email_delay(
+        body: EmailDelayIn,
+        x_admin_key: str | None = Header(default=None, alias="X-Admin-Key"),
+    ) -> dict[str, Any]:
+        """Live-demo control: how long a queued email stays in flight."""
+        require_admin(x_admin_key)
+        if body.delay_ms < 0:
+            raise HTTPException(400, "BAD_DELAY")
+        ctx.outbound.set_email_delay_ms(body.delay_ms)
+        return {"detail": "OK", "email_dispatch_delay_ms": ctx.outbound.email_delay_ms}
 
     @app.post("/admin/outbound/freeze")
     def freeze(body: FreezeIn, x_admin_key: str | None = Header(default=None, alias="X-Admin-Key")) -> dict[str, Any]:
