@@ -46,9 +46,9 @@
   <div>Stop owner: {{ deployment.owners.stop_owner }}. Stop: {{ deployment.stop_mechanism }}</div>
   <div>Fallback: {{ deployment.fallback }}</div>
   <div>Logs: {{ deployment.log_locations | join("; ") }}</div>
-  <div>Pre-flight: <span class="{{ 'pass' if preflight_ok else 'fail' }}">{{ "OK" if preflight_ok else "FAIL" }}</span>
+  <div>Pre-flight: {% if preflight_ok is none %}not recorded{% else %}<span class="{{ 'pass' if preflight_ok else 'fail' }}">{{ "OK" if preflight_ok else "FAIL" }}</span>{% endif %}
     · tokens: 3 scoped, TTL {{ ttl_s }} s · secrets in logs/transcript: {{ secret_leak_count }}
-    · admin key not in agent env: <span class="{{ 'pass' if admin_key_isolated else 'fail' }}">{{ "PASS" if admin_key_isolated else "FAIL" }}</span>
+    · admin key not in agent env: {% if admin_key_isolated is none %}not checked{% else %}<span class="{{ 'pass' if admin_key_isolated else 'fail' }}">{{ "PASS" if admin_key_isolated else "FAIL" }}</span>{% endif %}
     · allows after latch: {{ allows_after_latch }}
     {% if llm_backend_down is not none %}· LLM backend down during stop: <span class="{{ 'pass' if llm_backend_down else 'fail' }}">{{ "PASS" if llm_backend_down else "FAIL" }}</span>{% endif %}
     · restore: {{ restore_line }}
@@ -81,6 +81,7 @@
     </tr>
     {% endfor %}
   </table>
+  {% if not bypasses %}<div class="muted">No bypass rows. After ksdrill bypass, run ksdrill card again to add B1–B9.</div>{% endif %}
   <h2>Log excerpt · chain {{ "verified" if log.verified else "BROKEN" }} · head <code>{{ log.head_hash }}</code> · {{ log.records }} records</h2>
   <table>
     <tr><th>seq</th><th>event</th><th>decision</th><th>hash</th></tr>
@@ -110,7 +111,7 @@
     Synthetic demo agent and fake tools. Not an HKMA, ANSSI or EU assessment or certification. HKMA DP is non-binding (§2.3 p. 11). EU AI Act articles cited apply to high-risk AI systems. Timings measured on this machine.
     Retention policy: {{ retention_days }} days (config). The demo does not prove six-month retention.
     Laptop mode: the hash chain is detection, not prevention, for a user who can edit the files.
-    Token-layer probe (B1/B2) is a test hook: it is off unless the drill enables it, and it still requires the header X-Probe-Token-Layer.
+    Token-layer probe skips the latch only when the harness flag is on and the caller sends X-Probe-Token-Layer. ksdrill harness up turns that flag on; --no-probe-token-layer turns it off.
   </div>
 </body>
 </html>

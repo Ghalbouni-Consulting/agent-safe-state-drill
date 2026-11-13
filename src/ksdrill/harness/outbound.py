@@ -74,6 +74,12 @@ class OutboundQueue:
         }
         atomic_write(self.state_path, json_dumps(payload) + "\n", fsync=True)
 
+    def set_email_delay_ms(self, delay_ms: int) -> None:
+        """Change how long a queued email waits before it can be dispatched."""
+        with self.cv:
+            self.email_delay_ms = max(0, int(delay_ms))
+            self.cv.notify_all()
+
     def start(self) -> None:
         if self._thread and self._thread.is_alive():
             return

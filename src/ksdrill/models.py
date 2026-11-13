@@ -50,7 +50,7 @@ class DrillConfig(BaseModel):
     stop_at_step: int = 3
     retention_days: int = 183
     dispatcher_interval_ms: int = 250
-    email_dispatch_delay_ms: int = 8000
+    email_dispatch_delay_ms: int = 60000
     step_delay_ms: int = 600
     stop_window_ms: int = 5000
     grace_period_ms: int = 500

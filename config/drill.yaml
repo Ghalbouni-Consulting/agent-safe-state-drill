@@ -23,8 +23,11 @@ stop_at_step: 3
 retention_days: 183
 dispatcher_interval_ms: 250
 # How long an email may sit queued before the dispatcher releases it.
-# Gives an operator a visible in-flight window in the manual demo.
-email_dispatch_delay_ms: 8000
+# 60 s is the live-demo window so a narrated stop still finds the message
+# in flight (B9). `ksdrill drill` overrides this to 0 and freezes the
+# email channel, so the automated drill stays fast. Override a live run
+# with `ksdrill agent start --email-delay-ms` or KSD_EMAIL_DELAY_MS.
+email_dispatch_delay_ms: 60000
 step_delay_ms: 600
 # After the stop-at step the agent keeps sleeping so a drill (or a person)
 # can fire the stop before the next tool call. The drill kills the process
@@ -32,8 +35,10 @@ step_delay_ms: 600
 stop_window_ms: 5000
 grace_period_ms: 500
 agent_id: ap-agent-01
-# Token-layer probe is a drill test hook. Off unless a drill turns it on.
-# It does nothing unless the caller also sends X-Probe-Token-Layer: 1.
+# Token-layer probe lets bypass B1/B2 see 401 after the latch. It does
+# nothing unless the caller also sends X-Probe-Token-Layer: 1. The latch
+# check stays first on every normal call. `ksdrill harness up` turns this
+# on; `ksdrill harness up --no-probe-token-layer` turns it off.
 probe_token_layer: false
 velocity:
   enabled: true

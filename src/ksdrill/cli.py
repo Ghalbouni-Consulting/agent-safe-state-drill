@@ -50,7 +50,11 @@ def init_cmd(
 @harness_app.command("up")
 def harness_up(
     isolation: str = typer.Option("local", "--isolation", help="local, or docker (not in this build)."),
-    probe_token_layer: bool = typer.Option(False, "--probe-token-layer", help="Enable the B1/B2 token-layer test hook."),
+    probe_token_layer: bool = typer.Option(
+        True,
+        "--probe-token-layer/--no-probe-token-layer",
+        help="B1/B2 token-layer probe. On by default. Still needs header X-Probe-Token-Layer: 1.",
+    ),
     run: str | None = typer.Option(None, "--run"),
     runs: Path | None = typer.Option(None, "--runs-root"),
 ) -> None:
@@ -62,8 +66,7 @@ def harness_up(
         typer.echo(f"unknown isolation: {isolation}")
         raise typer.Exit(2)
     run_dir = resolve_run(runs_root(runs), run)
-    if probe_token_layer:
-        _enable_probe(run_dir)
+    _set_probe(run_dir, probe_token_layer)
     proc = _spawn_harness(run_dir)
     drill = _ports(run_dir)
     agent_url = f"http://{drill['bind_host']}:{drill['ports']['agent']}/health"
@@ -78,7 +81,10 @@ def harness_up(
     if proc.poll() is not None:
         typer.echo("harness exited during startup")
         raise typer.Exit(2)
-    typer.echo(f"harness up {run_dir.name} agent={drill['ports']['agent']} admin={drill['ports']['admin']}")
+    probe = "on" if probe_token_layer else "off"
+    typer.echo(
+        f"harness up {run_dir.name} agent={drill['ports']['agent']} admin={drill['ports']['admin']} probe={probe}"
+    )
 
 
 @harness_app.command("down")
@@ -97,11 +103,19 @@ def agent_start(
     scenario: str = typer.Option("supplier_payments", "--scenario"),
     llm: str = typer.Option("mock", "--llm", help="mock (default) or ollama."),
     pause_at_step: int | None = typer.Option(None, "--pause-at-step", help="Sleep after this step so an operator can stop."),
+    email_delay_ms: int | None = typer.Option(
+        None,
+        "--email-delay-ms",
+        help="How long a queued email stays in flight before dispatch. Overrides the run config and KSD_EMAIL_DELAY_MS.",
+    ),
     run: str | None = typer.Option(None, "--run"),
     runs: Path | None = typer.Option(None, "--runs-root"),
 ) -> None:
     """Launch the agent. Exit 3 if the safe-state latch is already set."""
     run_dir = resolve_run(runs_root(runs), run)
+    delay = _resolve_email_delay(email_delay_ms)
+    if delay is not None:
+        _apply_email_delay(run_dir, delay)
     name = scenario if scenario.endswith(".yaml") else f"{scenario}.yaml"
     code = launch_and_wait(
         run_dir,
@@ -295,12 +309,37 @@ def _ports(run_dir: Path) -> dict[str, object]:
     return yaml.safe_load((run_dir / "config" / "drill.yaml").read_text(encoding="utf-8"))
 
 
-def _enable_probe(run_dir: Path) -> None:
+def _set_probe(run_dir: Path, enabled: bool) -> None:
+    _set_drill_value(run_dir, "probe_token_layer", bool(enabled))
+
+
+def _resolve_email_delay(flag: int | None) -> int | None:
+    if flag is not None:
+        return flag
+    raw = os.environ.get("KSD_EMAIL_DELAY_MS")
+    if raw is None or raw == "":
+        return None
+    return int(raw)
+
+
+def _apply_email_delay(run_dir: Path, delay_ms: int) -> None:
+    """Write the delay into the run config and, if the harness is up, into the process."""
+    if delay_ms < 0:
+        typer.echo("email delay must be >= 0")
+        raise typer.Exit(2)
+    _set_drill_value(run_dir, "email_dispatch_delay_ms", int(delay_ms))
+    try:
+        _admin_post(run_dir, "/admin/outbound/email-delay", {"delay_ms": int(delay_ms)})
+    except httpx.ConnectError:
+        typer.echo(f"email delay {delay_ms} ms saved for the next harness start")
+
+
+def _set_drill_value(run_dir: Path, key: str, value: object) -> None:
     import yaml
 
     path = run_dir / "config" / "drill.yaml"
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
-    data["probe_token_layer"] = True
+    data[key] = value
     path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
 
 
@@ -428,6 +467,8 @@ def _bypass_attached(run_dir: Path, agent_url: str, admin_url: str) -> int:
     if restarted is not proc:
         stop_process(restarted)
     failed = [item.id for item in results if not item.passed]
+    payload = {"bypasses": [item.as_dict() for item in results]}
+    (run_dir / "bypass_result.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     for item in results:
         mark = "PASS" if item.passed else "FAIL"
         typer.echo(f"{item.id} {mark} {item.observed}")
