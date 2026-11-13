@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Ghalbouni Consulting SASU
+#
+# anssi_category is the ANSSI three-way catalogue
+# (autonomous / human_approval / prohibited), kept so this registry can
+# later feed an SW-F06 policy pack. Enforcement in this demo is the
+# allow-list, the payment cap, and the stop path — not a second dialog.
+
+tools:
+  - id: files
+    actions: [read, write]
+    ttl_s: 300
+    outbound: false
+    channel: null
+    anssi_category: autonomous
+  - id: payments
+    actions: [initiate]
+    ttl_s: 300
+    outbound: true
+    channel: bank
+    anssi_category: human_approval
+  - id: email
+    actions: [send]
+    ttl_s: 300
+    outbound: true
+    channel: email
+    anssi_category: human_approval

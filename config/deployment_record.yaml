@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Ghalbouni Consulting SASU
+#
+# HKMA discussion paper §7.3 fields for this synthetic deployment.
+
+deployment_id: ap-agent-01
+purpose: Pay three synthetic supplier invoices and send confirmation emails. Fake tools, fake bank, no real funds and no real mail.
+status: demo
+owners:
+  accountable: Joe (operator)
+  business: Ghalbouni Consulting SASU
+  technical: Software Product desk
+  control: Joe
+  stop_owner: Joe
+authorised_users:
+  - joe
+stop_mechanism: "ksdrill stop on the admin API (127.0.0.1:8702, admin key). Latch first, then the six HKMA safe-state steps, in a process the agent cannot reach."
+fallback: Manual queue at runs/<id>/fallback/manual_queue.jsonl. Fallback holds no tokens and does not change policy.
+log_locations:
+  - runs/<id>/log/audit-000.jsonl
+  - runs/<id>/log/manifest.json
+  - runs/<id>/evidence/
+credentials: One HMAC token per tool, audience-bound, TTL 300 s, epoch-revocable. Admin key and signing key stay in runs/<id>/secrets and are never placed in the agent environment.

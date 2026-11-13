@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Agent Safe-State Drill {{ run_id }}</title>
+<style>
+  @page { size: A4; margin: 5mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Liberation Sans", Arial, sans-serif;
+    font-size: {{ font_px }}px;
+    line-height: 1.22;
+    color: #1a1a1a;
+  }
+  h1 { font-size: 12px; margin: 0 0 1px; }
+  h2 { font-size: 8.5px; margin: 3px 0 1px; border-bottom: 0.4px solid #bbb; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { border: 0.3px solid #ccc; padding: 0 2px; vertical-align: top; text-align: left; }
+  th { background: #f4f4f5; font-weight: 600; }
+  .pass { color: #065f46; font-weight: 700; }
+  .fail { color: #991b1b; font-weight: 700; }
+  .banner { padding: 2px 4px; font-weight: 700; margin: 2px 0; }
+  .banner.pass { background: #d1fae5; }
+  .banner.fail { background: #fee2e2; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8px; }
+  .legend { columns: 3; column-gap: 6px; }
+  .legend div { break-inside: avoid; }
+  .unverified { color: #991b1b; font-weight: 700; }
+  .disclaimer { margin-top: 2px; border-top: 0.6px solid #111; padding-top: 2px; }
+  code { font-family: "Liberation Mono", ui-monospace, monospace; }
+  .muted { color: #333; }
+</style>
+</head>
+<body>
+  <h1>Agent Safe-State Drill</h1>
+  <div class="muted">Synthetic agent. One command, six timed steps, nine bypass attempts. HKMA's own term for the stop is a "kill switch".</div>
+  <div class="grid">
+    <div>Run <code>{{ run_id }}</code> · {{ started }} (Paris)</div>
+    <div>Operator {{ operator }} · trigger {{ trigger }} · LLM {{ llm }}</div>
+    <div>Machine {{ env.os }} · Python {{ env.python }} · {{ env.cpu }}</div>
+    <div>git <code>{{ env.git_commit }}</code> · config <code>{{ env.config_sha256[:16] }}</code></div>
+  </div>
+  <h2>Deployment record <span class="muted">HK-18 EU-08</span></h2>
+  <div>{{ deployment.purpose }}</div>
+  <div>Stop owner: {{ deployment.owners.stop_owner }}. Stop: {{ deployment.stop_mechanism }}</div>
+  <div>Fallback: {{ deployment.fallback }}</div>
+  <div>Logs: {{ deployment.log_locations | join("; ") }}</div>
+  <div>Pre-flight: <span class="{{ 'pass' if preflight_ok else 'fail' }}">{{ "OK" if preflight_ok else "FAIL" }}</span>
+    · tokens: 3 scoped, TTL {{ ttl_s }} s · secrets in logs/transcript: {{ secret_leak_count }}
+    · admin key not in agent env: <span class="{{ 'pass' if admin_key_isolated else 'fail' }}">{{ "PASS" if admin_key_isolated else "FAIL" }}</span>
+    · allows after latch: {{ allows_after_latch }}
+    {% if llm_backend_down is not none %}· LLM backend down during stop: <span class="{{ 'pass' if llm_backend_down else 'fail' }}">{{ "PASS" if llm_backend_down else "FAIL" }}</span>{% endif %}
+    · restore: {{ restore_line }}
+  </div>
+  <div class="banner {{ verdict | lower }}">{{ verdict }} · time to safe state {{ time_to_safe_state_ms }} ms · demo budget {{ budget_ms }} ms (our target, not a regulatory number) · latch {{ time_to_latch_ms }} ms{% if detection_time_ms is not none %} · detection {{ detection_time_ms }} ms{% endif %}</div>
+  <h2>Safe-state steps</h2>
+  <table>
+    <tr><th>Step</th><th>ms</th><th></th><th>Predicate</th><th>Clauses</th></tr>
+    {% for step in steps %}
+    <tr>
+      <td>{{ step.id }} {{ step.name }}</td>
+      <td>{{ step.duration_ms }}</td>
+      <td class="{{ 'pass' if step.pass else 'fail' }}">{{ "PASS" if step.pass else "FAIL" }}</td>
+      <td>{{ step.predicate }}</td>
+      <td>{{ step.clauses | join(" ") }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <h2>Bypass attempts</h2>
+  <table>
+    <tr><th>ID</th><th>Attempt</th><th>Expected</th><th>Observed</th><th></th><th>Clauses</th></tr>
+    {% for row in bypasses %}
+    <tr>
+      <td>{{ row.id }}</td>
+      <td>{{ row.name }}</td>
+      <td>{{ row.expected }}</td>
+      <td>{{ row.observed }}</td>
+      <td class="{{ 'pass' if row.pass else 'fail' }}">{{ "PASS" if row.pass else "FAIL" }}</td>
+      <td>{{ row.clauses | join(" ") }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <h2>Log excerpt · chain {{ "verified" if log.verified else "BROKEN" }} · head <code>{{ log.head_hash }}</code> · {{ log.records }} records</h2>
+  <table>
+    <tr><th>seq</th><th>event</th><th>decision</th><th>hash</th></tr>
+    {% for row in excerpt %}
+    <tr>
+      <td>{{ row.seq }}</td>
+      <td>{{ row.event }} {{ row.action or "" }} {{ row.reason or "" }}</td>
+      <td>{{ row.decision }}</td>
+      <td><code>{{ row.hash[:12] }}</code></td>
+    </tr>
+    {% endfor %}
+  </table>
+  <h2>Clause legend · {{ verified_count }}/{{ clause_count }} verified on {{ verified_on }}</h2>
+  <div class="muted">AI Act articles are quoted from OJ L 12.7.2024. Their wording is unchanged by Regulation (EU) 2026/1744. Article 113 dates follow Regulation (EU) 2026/1744 Article 1(40)(b): Annex III from 2 December 2027, Annex I from 2 August 2028. HKMA comments by 1 February 2027 (HK-24). A payments-and-email assistant is normally outside Annex III point 5(b) and 5(c); those rows are good-practice anchors here.</div>
+  <div class="legend">
+    {% for clause in clauses %}
+    <div class="{{ '' if clause.verified else 'unverified' }}">
+      <strong>{{ clause.id }}</strong>
+      {% if clause.verified %}Y{% else %}UNVERIFIED{% endif %}
+      p.{{ clause.page if clause.page is not none else "—" }}
+      {{ clause.ref }}
+      {% if clause.quote_kind == "finding" %}(finding){% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="disclaimer">
+    Synthetic demo agent and fake tools. Not an HKMA, ANSSI or EU assessment or certification. HKMA DP is non-binding (§2.3 p. 11). EU AI Act articles cited apply to high-risk AI systems. Timings measured on this machine.
+    Retention policy: {{ retention_days }} days (config). The demo does not prove six-month retention.
+    Laptop mode: the hash chain is detection, not prevention, for a user who can edit the files.
+    Token-layer probe (B1/B2) is a test hook: it is off unless the drill enables it, and it still requires the header X-Probe-Token-Layer.
+  </div>
+</body>
+</html>

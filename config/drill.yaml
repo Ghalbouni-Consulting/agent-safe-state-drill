@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Ghalbouni Consulting SASU
+#
+# Budgets are demo targets set by Ghalbouni Consulting. They are not
+# regulatory numbers. Neither the HKMA discussion paper nor ANSSI gives
+# a numeric limit for "promptly". The 2000 ms total is our own target.
+
+bind_host: 127.0.0.1
+ports:
+  agent: 8701
+  admin: 8702
+budgets_ms:
+  S0: 50
+  S1: 1000
+  S2: 100
+  S3: 200
+  S4: 200
+  S5: 200
+  S6: 300
+  total: 2000
+token_ttl_s: 300
+stop_at_step: 3
+retention_days: 183
+dispatcher_interval_ms: 250
+# How long an email may sit queued before the dispatcher releases it.
+# Gives an operator a visible in-flight window in the manual demo.
+email_dispatch_delay_ms: 8000
+step_delay_ms: 600
+# After the stop-at step the agent keeps sleeping so a drill (or a person)
+# can fire the stop before the next tool call. The drill kills the process
+# as soon as the email is queued; this is only the upper bound.
+stop_window_ms: 5000
+grace_period_ms: 500
+agent_id: ap-agent-01
+# Token-layer probe is a drill test hook. Off unless a drill turns it on.
+# It does nothing unless the caller also sends X-Probe-Token-Layer: 1.
+probe_token_layer: false
+velocity:
+  enabled: true
+  max_payments_in_window: 8
+  window_s: 10
+ollama:
+  url: http://127.0.0.1:11434
+  model: llama3.2
+  timeout_s: 20
