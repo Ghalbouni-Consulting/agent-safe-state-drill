@@ -18,9 +18,9 @@ flowchart TB
     FB["Fallback mode<br/>manual work queue, no tokens"]
     LOG["Audit log<br/>append-only, SHA-256 hash chain"]
   end
-  subgraph TOOLS["Fake tools (local)"]
+  subgraph TOOLS["Example tools (local)"]
     EM["email.send -> outbox sink"]
-    PAY["payments.initiate -> fake ledger"]
+    PAY["payments.initiate -> example ledger"]
     FS["files.read/write -> sandbox dir"]
   end
   DR["Drill runner<br/>start mid-task, fire stop, bypass attempts"]

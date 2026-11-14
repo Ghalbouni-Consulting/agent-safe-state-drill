@@ -7,7 +7,7 @@ The automated path, if you do not want to narrate a live stop, is `ksdrill drill
 | Time | What you say | What you run |
 | --- | --- | --- |
 | 0:00–0:30 | "This autumn two authorities asked the same question: can you actually stop an AI agent? The HKMA discussion paper of 2 November lists six things a stop should do. ANSSI asked for an emergency stop on 30 October, and the EU AI Act already speaks of a 'stop' button for high-risk systems. I'll show you a drill that tests all six on a live agent." | README header |
-| 0:30–1:15 | "This is a small agent paying three supplier invoices and emailing confirmations. Fake tools, fake bank. It holds one token per tool, each short-lived and scoped to one action." | Terminal A: `ksdrill harness up` then `ksdrill agent start --pause-at-step 3`. Terminal B: `ksdrill status --watch` (jti only, step counter). |
+| 0:30–1:15 | "This is a small agent paying three supplier invoices and emailing confirmations. Example tools, example bank. It holds one token per tool, each short-lived and scoped to one action." | Terminal A: `ksdrill harness up` then `ksdrill agent start --pause-at-step 3`. Terminal B: `ksdrill status --watch` (jti only, step counter). |
 | 1:15–1:45 | "It has paid one invoice. An email is waiting to go. Now I press stop." | Terminal B: `ksdrill stop --operator joe --reason "demo: threshold breach"` |
 | 1:45–2:30 | "One command, six steps, each timed: task halted, credentials revoked, tool connections cut, outbound paused, fallback on, logs sealed. The total is right here, in milliseconds. Those are laptop numbers, not a promise about your bank. The two-second line is our demo target. The paper does not give a number." | Step table with milliseconds and PASS |
 | 2:30–3:45 | "Now let's try to cheat. Reuse the old token: rejected. Forge one: rejected. Ask for a new one: broker locked. Send the email: paused, still held. Restart the agent: refused. Restart the whole harness: it comes back stopped. Edit the log: the hash chain catches it." | `ksdrill bypass`, or show the bypass table from `ksdrill drill` run just before |
@@ -18,4 +18,4 @@ If the live run misbehaves, `ksdrill card <last-good-run>` rebuilds the card fro
 
 The disclaimer on the card, and in the README, is fixed text:
 
-> Synthetic demo agent and fake tools. Not an HKMA, ANSSI or EU assessment or certification. HKMA DP is non-binding (§2.3 p. 11). EU AI Act articles cited apply to high-risk AI systems. Timings measured on this machine.
+> Synthetic demo agent and example tools. Not an HKMA, ANSSI or EU assessment or certification. HKMA DP is non-binding (§2.3 p. 11). EU AI Act articles cited apply to high-risk AI systems. Timings measured on this machine.

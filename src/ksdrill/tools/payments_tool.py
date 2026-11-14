@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 Ghalbouni Consulting SASU
-"""Fake ledger. Idempotency keys make a restore unable to replay a payment."""
+"""Example ledger. Idempotency keys make a restore unable to replay a payment."""
 
 from __future__ import annotations
 

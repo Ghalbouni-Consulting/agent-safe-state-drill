@@ -4,7 +4,7 @@
 # HKMA discussion paper §7.3 fields for this synthetic deployment.
 
 deployment_id: ap-agent-01
-purpose: Pay three synthetic supplier invoices and send confirmation emails. Fake tools, fake bank, no real funds and no real mail.
+purpose: Pay three synthetic supplier invoices and send confirmation emails. Example tools, example bank, no real funds and no real mail.
 status: demo
 owners:
   accountable: Joe (operator)

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 Ghalbouni Consulting SASU
 #
-# Nine tool calls: read, pay and confirm three fake invoices.
+# Nine tool calls: read, pay and confirm three example invoices.
 # stop_at_step 3 is the first email, i.e. after one payment and before
 # that confirmation is released. The build spec's "6 steps" parenthetical
 # lists these same nine operations; the stop index is what the drill uses.
