@@ -2,11 +2,11 @@
 
 A local drill for one question: can you actually stop a tool-using agent?
 
-You run a small agent that pays three **fake** supplier invoices and queues confirmation emails. One command, `ksdrill stop`, latches a safe state and then runs the six steps named in the Hong Kong Monetary Authority's November 2026 discussion paper: halt the task, revoke credentials, cut tool connections, pause outbound messages, switch to a fallback, and preserve the logs. The drill then tries nine ways around that stop. Each one has to fail, or, for a tampered log, be detected. The result is a one-page evidence card in HTML and, when Chromium is available, PDF.
+You run a small agent that pays three **example** supplier invoices and queues confirmation emails. One command, `ksdrill stop`, latches a safe state and then runs the six steps named in the Hong Kong Monetary Authority's November 2026 discussion paper: halt the task, revoke credentials, cut tool connections, pause outbound messages, switch to a fallback, and preserve the logs. The drill then tries nine ways around that stop. Each one has to fail, or, for a tampered log, be detected. The result is a one-page evidence card in HTML and, when Chromium is available, PDF.
 
 The drill engine is a library (`ksdrill`), a `ksdrill` command, and a FastAPI control plane. Nothing in the stop path depends on the model obeying an instruction. The agent can reach the world only through the harness.
 
-**Synthetic demo agent and fake tools. Not an HKMA, ANSSI or EU assessment or certification. HKMA DP is non-binding (§2.3 p. 11). EU AI Act articles cited apply to high-risk AI systems. Timings measured on this machine.**
+**Synthetic demo agent and example tools. Not an HKMA, ANSSI or EU assessment or certification. HKMA DP is non-binding (§2.3 p. 11). EU AI Act articles cited apply to high-risk AI systems. Timings measured on this machine.**
 
 The two-second figure is **our demo target**. Neither the HKMA paper nor ANSSI states a number for "promptly". Budgets live in `config/drill.yaml` and are labelled as such on every card.
 
@@ -33,7 +33,7 @@ ksdrill drill
 - `runs/<id>/evidence/card.html`
 - `runs/<id>/evidence/card.pdf` when Chromium is installed
 
-Open the HTML card in a browser. If Chromium is missing, the PDF is skipped with a warning. It is never replaced with a fake file.
+Open the HTML card in a browser. If Chromium is missing, the PDF is skipped with a warning. It is never replaced with a sample file.
 
 A slower walk-through, with the agent left in flight so you can press stop yourself:
 
@@ -126,7 +126,7 @@ The harness refuses a model URL that is not loopback. Bypass and safe-state chec
 
 ## Restore
 
-`ksdrill restore --operator joe --approve "note"` is the supervised way back. It opens a new token epoch, reconnects tools, and resumes the queue **without replaying** an outbound action that already had an external effect. Idempotency keys on the fake ledger and the outbox are what make that true.
+`ksdrill restore --operator joe --approve "note"` is the supervised way back. It opens a new token epoch, reconnects tools, and resumes the queue **without replaying** an outbound action that already had an external effect. Idempotency keys on the example ledger and the outbox are what make that true.
 
 A burst of payments can also stop the agent with no operator keystroke. The default is more than 8 payments in 10 seconds (`config/drill.yaml`, `velocity`). The card then shows a detection time. That threshold is ours, for the demo.
 
@@ -134,12 +134,12 @@ A burst of payments can also stop the agent with no operator keystroke. The defa
 
 | Piece | Role |
 | --- | --- |
-| `src/ksdrill/` | library: harness, fake tools, agent loop, drill, card |
+| `src/ksdrill/` | library: harness, example tools, agent loop, drill, card |
 | `ksdrill` | command line |
 | agent API `:8701` | tokens, tool calls, task events. This is all the agent can see |
 | admin API `:8702` | stop, status, restore, log verify. Admin key required |
 
-Fake tools, in-process only: `files` (sandbox directory), `payments` (SQLite ledger), `email` (outbox file). Outbound payments and emails leave through one queue.
+Example tools, in-process only: `files` (sandbox directory), `payments` (SQLite ledger), `email` (outbox file). Outbound payments and emails leave through one queue.
 
 `runs/` is gitignored. `ksdrill reset --yes` deletes it.
 

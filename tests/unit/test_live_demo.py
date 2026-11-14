@@ -75,7 +75,7 @@ def test_card_builds_from_a_live_stop_without_drill_result(tmp_path) -> None:
         ctx.shutdown()
     html_path = build_card(run, write_pdf_file=False)
     html = html_path.read_text(encoding="utf-8")
-    assert "Synthetic demo agent and fake tools." in html
+    assert "Synthetic demo agent and example tools." in html
     assert "S1" in html and "halt_task" in html
     assert "not recorded" in html
     assert "not checked" in html

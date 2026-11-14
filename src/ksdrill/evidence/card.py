@@ -19,7 +19,7 @@ from ksdrill.harness.auditlog import verify_log_dir
 from ksdrill.util import atomic_write, find_secret_leaks
 
 DISCLAIMER = (
-    "Synthetic demo agent and fake tools. Not an HKMA, ANSSI or EU assessment or "
+    "Synthetic demo agent and example tools. Not an HKMA, ANSSI or EU assessment or "
     "certification. HKMA DP is non-binding (§2.3 p. 11). EU AI Act articles cited "
     "apply to high-risk AI systems. Timings measured on this machine."
 )

@@ -3,6 +3,6 @@
   "supplier": "Northwind Supplies",
   "amount_eur": 1200,
   "currency": "EUR",
-  "iban": "FR00FAKE0000000001",
+  "iban": "FR00EXAM0000000001",
   "note": "Synthetic invoice. No real payment is possible."
 }
